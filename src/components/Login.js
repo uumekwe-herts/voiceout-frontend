@@ -38,10 +38,10 @@ const Login = () => {
             <div class="flex justify-between items-center mb-6">
             {/* <a href="#!" class="text-gray-800">Forgot password?</a> */}
             
-            <NavLink  to="/register-anon" exact>
+            <NavLink  to="/register/anonymous" exact>
                 Anonymous Registration
             </NavLink>
-            <NavLink  to="/login-anon" exact>
+            <NavLink  to="/login/anonymous" exact>
                 Anonymous Login
             </NavLink>
            

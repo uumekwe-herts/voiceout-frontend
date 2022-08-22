@@ -8,7 +8,6 @@ import configData from "../config.json";
 import validation from '../components/validation';
 
 
-
 const RegisterAnon = () => {
 const [regQuestions, setregQuestions] = useState([]);
 
@@ -39,7 +38,7 @@ const [values, setValues] = useState({
 const handleSubmit = (e) => {
     e.preventDefault();
     setErrors(validation(values));
-    axios.post(configData.SERVER_URL+"anon-user/create", {
+    axios.post(configData.SERVER_URL+"anonymous/register", {
       question_1 : values.question1,
       answer_1 : values.answer1,
       question_2 : values.question2,
@@ -172,7 +171,7 @@ const handleChange = (event) => {
                  {errors.answer3 && <p class="text-red-600 text-xs"> {errors.answer3} </p>}
             </div>
             <div class="flex justify-between items-center mb-6"> 
-                <NavLink to="/login-anon" class="mb-4">
+                <NavLink to="/login/anonymous" class="mb-4">
                     <span class="text-blue-600 ease-in-out hover:text-blue-700 transition duration-300"> Anonymous Login </span>
                 </NavLink>
                 <button type="submit" class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs 
