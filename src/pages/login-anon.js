@@ -7,7 +7,7 @@ import configData from "../config.json";
 const LoginAnon = () => {
   const [anonymousEmail, setAnonymousEmail] = useState([]);
   const [anonymousPassword, setAnonymousPassword] = useState([]);
-  const [redirect, setRedirect] = useState([]);
+ 
 
   const nav = useNavigate();
   
@@ -16,28 +16,15 @@ const LoginAnon = () => {
     let response = await axios.post(configData.SERVER_URL+"anonymous/login", {
       email : anonymousEmail,
       password : anonymousPassword,
-    },  
-    {
-      headers: {'X-Requested-With': 'XMLHttpRequest'}
     })
     console.log(response.data)
     const token = response.data.token
     localStorage.setItem('token', token);
+    localStorage.setItem('userType', configData.ANONYMOUS_USER);
+    
     if(token){
           nav("/user/dashboard")
-     }
-    // .then((response) => {
-    //     console.log(response.data)
-    //     const token = response.data.token
-    //     localStorage.setItem('token', token);
-    // }).then( token => {
-    //   if(token){
-    //     nav("/user/dashboard")
-    //   }
-    // });
-
-  //setRedirect(true);
- 
+     } 
   }
 
   return (

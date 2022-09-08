@@ -11,7 +11,7 @@ import validation from '../components/validation';
 const RegisterAnon = () => {
 const [regQuestions, setregQuestions] = useState([]);
 
-useEffect(() => {
+useEffect(() => { 
     async function fetchquestions() {
         const questionsData =  await axios.get(configData.SERVER_URL+"anon-user/reg-questions");
         const results = [];
@@ -56,7 +56,6 @@ const handleSubmit = (e) => {
             })
         }
     });
-
 }
 
 const [errors, setErrors] = useState({});
@@ -70,7 +69,6 @@ const handleChange = (event) => {
 
   return (
     <>
-   
     <div class="flex flex-row ...">
         <div class="ml-4"> 
             <NavLink  to="/"> <img src={logo} class="w-24" alt=""/> </NavLink>

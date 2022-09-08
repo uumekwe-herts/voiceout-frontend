@@ -1,3 +1,5 @@
 {
-"SERVER_URL": "http://localhost:8010/api/"
+"SERVER_URL": "http://localhost:8010/api/",
+"REGULAR_USER": "regularUser",
+"ANONYMOUS_USER": "anonymousUser"
 }

@@ -8,24 +8,32 @@ import LoginAnon from './pages/login-anon';
 import RegisterAnon from './pages/register-anon';
 import Register from './pages/register';
 import UserDashboard from './pages/user-dashboard';
-import PrivateRoutes from './utils/PrivateRoute';
-import PublicRoute from './utils/PublicRoute';
+import PrivateRoutes from './utils/PrivateRoutes';
+import PublicRoutes from './utils/PublicRoutes';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers';
 
 function App() {
 
 
   return (
+  
     <Router>
       <Routes>
+
+        <Route element={<PublicRoutes/>}>
         <Route exact path="/" element={<Login/>} />
-        <Route exact="true" path="/register/anonymous" element={<RegisterAnon/>} />
-        <Route exact path="/login/anonymous" element={<LoginAnon/>} /> 
-        <Route exact path="/register" element={<Register/>} /> 
+          <Route exact="true" path="/register/anonymous" element={<RegisterAnon/>} />
+          <Route exact path="/login/anonymous" element={<LoginAnon/>} /> 
+          <Route exact path="/register" element={<Register/>} /> 
+        </Route>
+      
         <Route element={<PrivateRoutes/>}>
         <Route exact path="/user/dashboard" element={<UserDashboard />} />  
         </Route>
       </Routes>
     </Router>
+   
   );
 }
 

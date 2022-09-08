@@ -9,16 +9,33 @@ const UserDashboard = () => {
  
   useEffect(() => {
     const token = localStorage.getItem('token')
+    const userType = localStorage.getItem('userType');
 
-    axios.get(configData.SERVER_URL+"anonymous/dashboard",{
-      headers:{
-        'Authorization' : 'Bearer ' + token
+    if(userType === configData.ANONYMOUS_USER){
+        axios.get(configData.SERVER_URL+"anonymous/profile",{
+          headers:{
+            'Authorization' : 'Bearer ' + token
+          }
+        })
+        .then((response) => {
+            console.log(response.data)
+        });
       }
+
+      if(userType === configData.REGULAR_USER){
+        axios.get(configData.SERVER_URL+"user/profile",{
+          headers:{
+            'Authorization' : 'Bearer ' + token
+          }
+        })
+        .then((response) => {
+            console.log(response.data)
+        });
+      }
+
     })
-    .then((response) => {
-        console.log(response.data)
-    });
-  })
+
+    
 
   return (
     <div> 
