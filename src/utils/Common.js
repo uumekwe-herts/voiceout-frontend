@@ -14,3 +14,7 @@ export const getToken = () => {
     localStorage.setItem('token', token);
     //sessionStorage.setItem('user', JSON.stringify(user));
   }
+
+  export const getUserType = () => {
+    return localStorage.getItem('userType');
+  }

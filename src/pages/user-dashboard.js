@@ -11,6 +11,10 @@ const UserDashboard = () => {
     const token = localStorage.getItem('token')
     const userType = localStorage.getItem('userType');
 
+    if(userType === configData.ADMIN_USER){
+      nav('/admin/dashboard');
+    }
+
     if(userType === configData.ANONYMOUS_USER){
         axios.get(configData.SERVER_URL+"anonymous/profile",{
           headers:{

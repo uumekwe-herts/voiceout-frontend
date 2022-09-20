@@ -8,6 +8,8 @@ import LoginAnon from './pages/login-anon';
 import RegisterAnon from './pages/register-anon';
 import Register from './pages/register';
 import UserDashboard from './pages/user-dashboard';
+import AdminLogin from './pages/admin-login';
+import AdminDashboard from './pages/admin-dashboard';
 import PrivateRoutes from './utils/PrivateRoutes';
 import PublicRoutes from './utils/PublicRoutes';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -26,10 +28,12 @@ function App() {
           <Route exact="true" path="/register/anonymous" element={<RegisterAnon/>} />
           <Route exact path="/login/anonymous" element={<LoginAnon/>} /> 
           <Route exact path="/register" element={<Register/>} /> 
+          <Route exact path="/admin/login" element={<AdminLogin/>} /> 
         </Route>
       
         <Route element={<PrivateRoutes/>}>
         <Route exact path="/user/dashboard" element={<UserDashboard />} />  
+        <Route exact path="/admin/dashboard" element={<AdminDashboard />} />  
         </Route>
       </Routes>
     </Router>

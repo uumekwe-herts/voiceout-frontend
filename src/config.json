@@ -1,5 +1,6 @@
 {
 "SERVER_URL": "http://localhost:8010/api/",
 "REGULAR_USER": "regularUser",
-"ANONYMOUS_USER": "anonymousUser"
+"ANONYMOUS_USER": "anonymousUser",
+"ADMIN_USER": "adminUser"
 }
