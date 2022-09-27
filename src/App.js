@@ -14,6 +14,9 @@ import PrivateRoutes from './utils/PrivateRoutes';
 import PublicRoutes from './utils/PublicRoutes';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers';
+import Anonymous from './components/ReportCase/Anonymous';
+import CaseDetails from './components/CaseDetails';
+import Regular from './components/ReportCase/Regular';
 
 function App() {
 
@@ -34,6 +37,9 @@ function App() {
         <Route element={<PrivateRoutes/>}>
         <Route exact path="/user/dashboard" element={<UserDashboard />} />  
         <Route exact path="/admin/dashboard" element={<AdminDashboard />} />  
+        <Route exact path="/user/reportcase/anonymous" element={<Anonymous />} />  
+        <Route exact path="/user/reportcase" element={<Regular />} />  
+        <Route path="user/case/:id" element={<CaseDetails />}/>
         </Route>
       </Routes>
     </Router>

@@ -18,11 +18,14 @@ const Login = () => {
     },  
     {
       headers: {'X-Requested-With': 'XMLHttpRequest'}
-    })
+    });
+    
     console.log(response.data)
     const token = response.data.token
     localStorage.setItem('token', token);
-    localStorage.setItem('userType', 'regularUser');
+    localStorage.setItem('userType', configData.USER_TYPE.REGULAR);
+    localStorage.setItem('userId', response.data.user.id);
+
     if(token){
           nav("/user/dashboard")
      } 
