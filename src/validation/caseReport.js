@@ -1,10 +1,19 @@
-const anonymousCaseReportValidation = (values, dateOfIncident) => {
+const caseReportValidation = (values, dateOfIncident) => {
     let errors = {};
     if(!values.reportingFor){
         errors.reportingFor="Please select who you are reporting for";
     }
-    if(!values.phoneNumber){
-        errors.phoneNumber="Please enter your phone number";
+    if(!values.contactPhone){
+        errors.contactPhone="Please enter your phone number";
+    }
+    if(!values.contactFirstName){
+        errors.contactFirstName="Please enter contact first name";
+    }
+    if(!values.contactLastName){
+        errors.contactLastName="Please enter contact last name";
+    }
+    if(!values.contactEmail){
+        errors.contactEmail="Please enter contact email";
     }
     if(!values.age){
         errors.age="Please enter your age";
@@ -30,4 +39,4 @@ const anonymousCaseReportValidation = (values, dateOfIncident) => {
 return errors;
 }
 
-export default anonymousCaseReportValidation 
+export default caseReportValidation 

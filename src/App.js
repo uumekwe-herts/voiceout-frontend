@@ -16,6 +16,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import Anonymous from './components/ReportCase/Anonymous';
 import CaseDetails from './components/CaseDetails';
+import AdminTriageCase from './components/AdminTriageCase';
 import Regular from './components/ReportCase/Regular';
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
         <Route exact path="/user/reportcase/anonymous" element={<Anonymous />} />  
         <Route exact path="/user/reportcase" element={<Regular />} />  
         <Route path="user/case/:id" element={<CaseDetails />}/>
+        <Route path="admin/triage/case/:id" element={<AdminTriageCase/>}/>
         </Route>
       </Routes>
     </Router>

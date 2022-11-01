@@ -5,7 +5,7 @@ import configData from "../config.json";
 import TopNav from '../components/Navigation/TopNav';
 import SideNav from '../components/Navigation/SideNav';
 
-const CaseDetails = () => {
+const AdminTriageCase = () => {
   const token = localStorage.getItem('token');
   const { id } = useParams();
   const [caseDetails, setCaseDetails] = useState([]);
@@ -17,10 +17,13 @@ const CaseDetails = () => {
         'Authorization' : 'Bearer ' + token
       }
     })
-    console.log(response.data.attachments);
+   // console.log(response.data.attachments);
+    console.log(response.data);
     setCaseDetails(response.data.case);
     setCaseAttachments(response.data.attachments);
   }
+
+//   const downloadAttachment() = async()
 
   useEffect(() => {
     loadCaseDetails();
@@ -56,6 +59,24 @@ const CaseDetails = () => {
                   <p class="text-gray-700 text-base"><strong>Contact Phone:  </strong>{caseDetails.contact_phone}</p>
                   <p class="text-gray-700 text-base"><strong> Incident Address:  </strong>{caseDetails.incident_address}</p>
                   <p class="text-gray-700 text-base"><strong> Case details:</strong>  {caseDetails.case_details}</p>
+                  <p class="text-gray-700 text-base"><strong> Case Status:</strong> 
+                  {
+                   caseDetails.status === 'Pending' &&  
+                   <button type="button" class="inline-block px-6 py-2.5 bg-yellow-500 text-white 
+                   font-medium text-xs leading-tight uppercase rounded-full shadow-md 
+                   hover:bg-yellow-600 hover:shadow-lg focus:bg-yellow-600 focus:shadow-lg 
+                   focus:outline-none focus:ring-0 active:bg-yellow-700 active:shadow-lg 
+                   transition duration-150 ease-in-out">Pending</button>
+                   } 
+                  {
+                   caseDetails.status === 'Under Investigation' &&  
+                   <button type="button" class="inline-block px-6 py-2.5 bg-green-500 text-white 
+                   font-medium text-xs leading-tight uppercase rounded-full shadow-md 
+                   hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg 
+                   focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg 
+                   transition duration-150 ease-in-out">Under Investigation</button>
+                   } 
+                   </p> 
                   
                   { caseDetails.contact_email && 
                   <p class="text-gray-700 text-base"><strong> Contact Last Name: </strong> {caseDetails.contact_email}</p>
@@ -65,7 +86,7 @@ const CaseDetails = () => {
                  <p><strong> Attachments </strong>
                   { caseAttachments.length !== 0 ?
                      (caseAttachments.map(function (file, index){
-                       return(<p> <a href="/uploads/"> {file.file_name}  </a> </p>);
+                       return(<p class="text-blue-600 underline"> <a href={configData.SERVER_URL+"admin/download/caseAttachment/"+file.file_name}> {file.file_name}  </a> </p>);
                     })) : <h3> No attachments were submitted </h3>
                   }
                   </p>
@@ -78,4 +99,4 @@ const CaseDetails = () => {
   )
 }
 
-export default CaseDetails
+export default AdminTriageCase

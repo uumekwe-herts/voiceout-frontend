@@ -4,9 +4,6 @@
     "REGULAR" : "Regular",
     "ANONYMOUS": "Anonymous",
     "ADMIN": "Admin"
-},
-"REGULAR_USER": "regularUser",
-"ANONYMOUS_USER": "anonymousUser",
-"ADMIN_USER": "adminUser",
+}
 
 }

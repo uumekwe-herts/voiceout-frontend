@@ -11,7 +11,15 @@ const UserDashboard = () => {
   const token = localStorage.getItem('token')
   const userType = localStorage.getItem('userType');
   const userId = localStorage.getItem('userId');
+
+  if(userType === configData.USER_TYPE.ADMIN){
+    nav('/admin/dashboard');
+  }
   const [userCases, setUserCases] = useState([]);
+
+  function timeout(ms) {
+    return Promise((resolve) => setTimeout(resolve, ms));
+  }
 
   const loadUserCases = async(e) => { 
     let response = await axios.get(configData.SERVER_URL+"cases/"+userId+"/"+userType,{
@@ -20,15 +28,14 @@ const UserDashboard = () => {
       }
     })
     console.log(response.data);
+    await timeout(1000);
     setUserCases(response.data);
   }
 
   useEffect(() => {
+    
     loadUserCases();
-    if(userType === configData.ADMIN_USER){
-      nav('/admin/dashboard');
-    }
-
+  
     if(userType === configData.USER_TYPE.ANONYMOUS){
       //do something here 
       }
@@ -45,7 +52,7 @@ const UserDashboard = () => {
         // });
       }
 
-    })
+    },[userCases])
 
     
 
@@ -64,12 +71,11 @@ const UserDashboard = () => {
           <div class="mx-2">
               {  userCases.length === 0 ? (" You have no cases reported yet."): 
                 userCases.map(function(item, i){
-                  console.log('test');
                   return (<div class=" container lg:w-9/12  justify-center mt-3 ">
                     <div class="block p-6 rounded-lg shadow-lg bg-white max-w-full">
                       <h5 class="text-gray-900 text-xl leading-tight font-medium mb-2">Case Id: {item.case_id}</h5>
                       <p class="text-gray-700 text-base">Reporting For: {item.reporting_for}</p>
-                      <p class="text-gray-700 text-base">Phone Number: {item.phone_number}</p>
+                      <p class="text-gray-700 text-base">Phone Number: {item.contact_phone}</p>
                       <p class="text-gray-700 text-base mb-4">Date of incident: {item.date_of_incident}</p>
                       <a type="button" href={`case/${item.id}`} class=" inline-block px-6 py-1.5 bg-blue-600 text-white font-medium text-xs 
                       rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg 

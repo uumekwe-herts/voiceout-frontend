@@ -7,11 +7,13 @@ import configData from "../config.json";
 const Login = () => {
   const [userEmail, setUserEmail] = useState([]);
   const [userPassword, setUserPassword] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const nav = useNavigate();
 
   const submit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     let response = await axios.post(configData.SERVER_URL+"user/login", {
       email : userEmail,
       password : userPassword,
@@ -25,7 +27,7 @@ const Login = () => {
     localStorage.setItem('token', token);
     localStorage.setItem('userType', configData.USER_TYPE.REGULAR);
     localStorage.setItem('userId', response.data.user.id);
-
+    setIsLoading(false);
     if(token){
           nav("/user/dashboard")
      } 

@@ -12,6 +12,7 @@ const LoginAnon = () => {
   
   const submit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     let response = await axios.post(configData.SERVER_URL+"anonymous/login", {
       email : anonymousEmail,
       password : anonymousPassword,
@@ -21,7 +22,7 @@ const LoginAnon = () => {
     localStorage.setItem('token', token);
     localStorage.setItem('userType', configData.USER_TYPE.ANONYMOUS);
     localStorage.setItem('userId', response.data.user.id);
-
+    setIsLoading(false);
     if(token){
           nav("/user/dashboard")
      } 
@@ -48,7 +49,7 @@ const LoginAnon = () => {
             <input type="email" 
               onChange={e => setAnonymousEmail(e.target.value)}
               class="form-control block w-full px-4 py-1 text-xl font-normal 
-              text-gray-700 border border-solid border-gray-300 rounded 
+              text-gray-400 border border-solid border-gray-300 rounded 
               transition ease-in-out m-0 focus:text-gray-700 focus:border-blue-600 
               focus:outline-none" name="email" required/>
           </div> 
@@ -57,7 +58,7 @@ const LoginAnon = () => {
             <input type="password" 
               onChange={e => setAnonymousPassword(e.target.value)}
               class="form-control block w-full px-4 py-1 text-xl font-normal 
-              text-gray-700 border border-solid border-gray-300 rounded m-0 focus:text-gray-700  
+              text-gray-400 border border-solid border-gray-300 rounded m-0 focus:text-gray-700  
               focus:border-blue-600 focus:outline-none" 
               name="password" required/>
           </div> 

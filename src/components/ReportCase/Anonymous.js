@@ -48,6 +48,7 @@ const Anonymous = () => {
         reportingFor: "", 
         phoneNumber: "", 
         age: "",
+        category:"",
         caseInformation: "", 
         incidentAddress: "", 
         numberOfVictims: "",
@@ -63,8 +64,8 @@ const Anonymous = () => {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        let formatedDateOfIncident = moment(new Date(dateOfIncident)).format('YYYY-MM-DD')
-        setErrors(anonymousCaseReportValidation(values, dateOfIncident));
+        let formatedDateOfIncident = moment(new Date(dateOfIncident)).format('YYYY-MM-DD');
+        setErrors(anonymousCaseReportValidation(values, formatedDateOfIncident));
         const config ={
             headers:{
                 'Authorization':`Bearer ${token}`,
@@ -74,7 +75,8 @@ const Anonymous = () => {
         const formData = new FormData();
          formData.append('reporting_for',values.reportingFor)
          formData.append('contact_phone',values.phoneNumber)
-         formData.append('age',values.age)
+         formData.append('age',values.age);
+         formData.append('category',values.category);
          formData.append('case_details',values.caseInformation)
          formData.append('incident_address',values.incidentAddress)
          formData.append('number_of_victims',values.numberOfVictims)
