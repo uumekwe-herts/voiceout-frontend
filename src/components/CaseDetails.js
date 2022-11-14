@@ -4,27 +4,64 @@ import axios from "axios";
 import configData from "../config.json";
 import TopNav from '../components/Navigation/TopNav';
 import SideNav from '../components/Navigation/SideNav';
+import LoadingIndicator from '../utils/LoadingIndicator';
+import CommentTimeline from './Comment/CommentTimeline';
 
 const CaseDetails = () => {
   const token = localStorage.getItem('token');
   const { id } = useParams();
   const [caseDetails, setCaseDetails] = useState([]);
   const [caseAttachments, setCaseAttachments] = useState([]);
+  const [caseComments, setCaseComments] = useState([]);
+
+  const [isApiLoading, setApiLoading] = useState([false]);
+  function timeout(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
 
   const loadCaseDetails = async(e) => { 
-    let response = await axios.get(configData.SERVER_URL+"case/"+id,{
-      headers:{
-        'Authorization' : 'Bearer ' + token
+    try
+    {
+      await timeout(1000);
+      await axios.get(configData.SERVER_URL+"case/"+id,{
+        headers:{
+          'Authorization' : 'Bearer ' + token
+        }
+      })
+      .then(res => {
+        console.log(res.data.attachments);
+        setCaseDetails(res.data.case);
+        setCaseAttachments(res.data.attachments);
+      })
+      setApiLoading(true);
+    } catch(e) {
+      console.log(e)
+    }
+  
+  }
+
+  const loadCaseComments = async (e) => {
+    try{
+       await timeout(1000);
+       await axios.get(configData.SERVER_URL+"user/case/comments/"+id,{
+          headers:{
+            'Authorization' : 'Bearer ' + token
+          }
+        })
+        .then(res => {
+          console.log(res.data); 
+          setCaseComments(res.data.comments);     
+        })
+      } catch(e) {
+        console.log()
       }
-    })
-    console.log(response.data.attachments);
-    setCaseDetails(response.data.case);
-    setCaseAttachments(response.data.attachments);
   }
 
   useEffect(() => {
     loadCaseDetails();
-  });
+    loadCaseComments();
+    setApiLoading(false);
+  },[]);
   return (
     <>
     <TopNav/>
@@ -39,6 +76,7 @@ const CaseDetails = () => {
 
             <div class="mx-2">
               <div class="container lg:w-9/12  justify-center mt-3 ">
+                {isApiLoading ? (
                 <div class="block p-6 rounded-lg shadow-lg bg-white max-w-full">
                   <h5 class="text-gray-900 text-xl leading-tight font-medium mb-2">Case Id: {caseDetails.id}</h5>
                   { caseDetails.contact_first_name && 
@@ -70,8 +108,13 @@ const CaseDetails = () => {
                   }
                   </p>
                 </div>
+                ) : <LoadingIndicator/>}
+             
+
               </div>
             </div>
+
+            <CommentTimeline caseComments={caseComments} />
         </div>
     </main>
     </>

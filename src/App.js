@@ -18,6 +18,9 @@ import Anonymous from './components/ReportCase/Anonymous';
 import CaseDetails from './components/CaseDetails';
 import AdminTriageCase from './components/AdminTriageCase';
 import Regular from './components/ReportCase/Regular';
+import AddNumber from './components/EmergencyNumber/AddNumber';
+import ListNumbers from './components/EmergencyNumber/ListNumbers';
+import EditNumber from './components/EmergencyNumber/EditNumber';
 
 function App() {
 
@@ -42,6 +45,9 @@ function App() {
         <Route exact path="/user/reportcase" element={<Regular />} />  
         <Route path="user/case/:id" element={<CaseDetails />}/>
         <Route path="admin/triage/case/:id" element={<AdminTriageCase/>}/>
+        <Route exact path="admin/emergencynumber/add" element={<AddNumber/> }/>
+        <Route exact path="admin/emergencynumber/edit/:id" element={<EditNumber/> }/>
+        <Route exact path="/general/emergencynumbers" element={<ListNumbers/> }/>
         </Route>
       </Routes>
     </Router>

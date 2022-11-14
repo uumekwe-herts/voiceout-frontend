@@ -4,6 +4,7 @@ import axios from "axios";
 import configData from "../config.json";
 import TopNav from '../components/Navigation/TopNav';
 import SideNav from '../components/Navigation/SideNav';
+import LoadingIndicator from '../utils/LoadingIndicator';
 
 const UserDashboard = () => {
   const nav = useNavigate();
@@ -16,46 +17,41 @@ const UserDashboard = () => {
     nav('/admin/dashboard');
   }
   const [userCases, setUserCases] = useState([]);
+  const [isApiLoading, setApiLoading] = useState([false]);
 
   function timeout(ms) {
-    return Promise((resolve) => setTimeout(resolve, ms));
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
   const loadUserCases = async(e) => { 
-    let response = await axios.get(configData.SERVER_URL+"cases/"+userId+"/"+userType,{
-      headers:{
-        'Authorization' : 'Bearer ' + token
-      }
-    })
-    console.log(response.data);
-    await timeout(1000);
-    setUserCases(response.data);
+    try{
+        await timeout(1000);
+        let response = await axios
+          .get(configData.SERVER_URL+"cases/"+userId+"/"+userType,{
+            headers:{
+              'Authorization' : 'Bearer ' + token
+            }
+          })
+          .then(res => {
+              setUserCases(res.data);
+          });
+          setApiLoading(true);
+    } catch(e) {
+      console.log(e)
+    }
+   
   }
 
   useEffect(() => {
-    
-    loadUserCases();
-  
+      loadUserCases();
     if(userType === configData.USER_TYPE.ANONYMOUS){
       //do something here 
       }
-
       if(userType === configData.REGULAR_USER){
-        // axios.get(configData.SERVER_URL+"user/profile",{
-        //   headers:{
-        //     'Authorization' : 'Bearer ' + token
-        //   }
-        // })
-        // .then((response) => {
-        //    // console.log(response.data)
-        //   //localStorage.setItem('user', response.data.email);
-        // });
       }
-
-    },[userCases])
-
-    
-
+      setApiLoading(false);
+     
+    },[])
   return (
     <> 
       <TopNav/>
@@ -69,22 +65,25 @@ const UserDashboard = () => {
           </div>
 
           <div class="mx-2">
-              {  userCases.length === 0 ? (" You have no cases reported yet."): 
-                userCases.map(function(item, i){
-                  return (<div class=" container lg:w-9/12  justify-center mt-3 ">
-                    <div class="block p-6 rounded-lg shadow-lg bg-white max-w-full">
-                      <h5 class="text-gray-900 text-xl leading-tight font-medium mb-2">Case Id: {item.case_id}</h5>
-                      <p class="text-gray-700 text-base">Reporting For: {item.reporting_for}</p>
-                      <p class="text-gray-700 text-base">Phone Number: {item.contact_phone}</p>
-                      <p class="text-gray-700 text-base mb-4">Date of incident: {item.date_of_incident}</p>
-                      <a type="button" href={`case/${item.id}`} class=" inline-block px-6 py-1.5 bg-blue-600 text-white font-medium text-xs 
-                      rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg 
-                      focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg 
-                      transition duration-150 ease-in-out">Case details</a>
-                    </div>
-                </div>);
-                })
-            }
+            {isApiLoading ? 
+              (userCases.length === 0 ? (" You have no cases reported yet."): 
+                  userCases.map(function(item, i){
+                    return (<div class=" container lg:w-9/12  justify-center mt-3 ">
+                      <div class="block p-6 rounded-lg shadow-lg bg-white max-w-full">
+                        <h5 class="text-gray-900 text-xl leading-tight font-medium mb-2">Case Id: {item.id}</h5>
+                        <p class="text-gray-700 text-base">Reporting For: {item.reporting_for}</p>
+                        <p class="text-gray-700 text-base">Phone Number: {item.contact_phone}</p>
+                        <p class="text-gray-700 text-base mb-4">Date of incident: {item.date_of_incident}</p>
+                        <a type="button" href={`case/${item.id}`} class=" inline-block px-6 py-1.5 bg-blue-600 text-white font-medium text-xs 
+                        rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg 
+                        focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg 
+                        transition duration-150 ease-in-out">Case details</a>
+                      </div>
+                  </div>);
+                  })) : <LoadingIndicator/>
+              }
+            
+              
             </div>
 
         </div>
